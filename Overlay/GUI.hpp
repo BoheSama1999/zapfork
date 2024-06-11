@@ -1022,7 +1022,7 @@ struct Menu
 				ImGui::Text("Ragebot");
 				ImGui::Checkbox("Enabled##RageAimbot", &Features::Ragebot::RageAimbot);
 				if (Features::Ragebot::RageAimbot) {
-					const char* AimMethodIndex[] = { "Memory", "Mouse" };
+					const char* AimMethodIndex[] = { "Memory", "Mouse", "Silent" };
 					ImGui::ComboBox("Aim Method##RageAimbot", &Features::Ragebot::AimMethod, AimMethodIndex, IM_ARRAYSIZE(AimMethodIndex));
 
 					ImGui::Text("Selected Hitbox");
