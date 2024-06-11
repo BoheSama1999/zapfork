@@ -453,6 +453,44 @@ struct Ragebot
 				X11Display->MouseClickLeft();
 			}
 		}
+
+		//Simple Silent Aim 
+		
+		//something shouldnt here, just for test
+		if (Features::Ragebot::AimMethod == 2) {
+			Vector2D VectorDesiredAngles = Vector2D(DesiredAngles.x, DesiredAngles.y);
+			
+			uintptr_t netChannel = Memory::Read<uintptr_t>(OFF_REGION + CMD_NET_CHANNEL);
+        		unsigned long chokedCommands = Memory::Read<unsigned long>(netChannel + 0x2028);
+			
+			#include <limits> // dont put it here ,just for test 
+			float testmax = numeric_limits<float>::max();
+			M.Write<double>(netChannel + 0x2108, testmax); //choke
+
+        		if (chokedCommands <= 0)
+        		{
+            			choking = false;
+            			return;
+        		}
+			
+			if (chokedCommands > 7)
+            		{
+                		M.Write<double>(0, netChannel + 0x2108);
+                		continue;
+            		}
+			
+        		int current_number = Memory::Read<int>(OFF_REGION + CMD_NEW_COMMAND_NUM);
+        		int iDesiredCmdNumber = current_number + 1;
+        		uintptr_t cmdBase = Memory::Read<uintptr_t>(OFF_REGION + CMD_PCOMMAND + 248);
+        		uintptr_t old_usercmd = cmdBase + (552 * (((uintptr_t)iDesiredCmdNumber - 1) % 750));
+        		uintptr_t usercmd = cmdBase + (552 * ((uintptr_t)iDesiredCmdNumber % 750));
+        		while (Memory::Read<int>((uintptr_t)usercmd) < iDesiredCmdNumber)
+        		{
+         		   	Sleep(0);
+        		}
+        		M.Write<Vector2>(old_usercmd + 0xC,VectorDesiredAngles);
+        		M.Write<double>(netChannel + 0x2108, 0);
+		}
 	}
 
 	void SmoothAngle(QAngle& Angle) {
