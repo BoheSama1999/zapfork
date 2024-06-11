@@ -78,3 +78,12 @@ constexpr long OFF_GLOW_THROUGH_WALL = 0x26c;   //Script_Highlight_SetVisibility
 constexpr long OFF_GLOW_FIX = 0x268;            //
 constexpr long OFF_GLOW_HIGHLIGHT_ID = 0x28C;   //[DT_HighlightSettings].m_highlightServerActiveStates
 constexpr long OFF_GLOW_HIGHLIGHTS = 0xade5c40; //highlightsettings
+
+//CMD
+constexpr long CMD_PCOMMAND = 0x2243820; //pCommands
+constexpr long CMD_NEW_COMMAND_NUM = 0x17e7d94; //LatestCommandNumber
+constexpr long CMD_NET_CHANNEL = 0x17c7000;
+
+
+
+
